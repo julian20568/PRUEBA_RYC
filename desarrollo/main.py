@@ -31,6 +31,20 @@ def uploader():
   filename = secure_filename(f.filename)
   f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
   return "<h1>Archivo subido exitosamente</h1>"
+
+@app.route("/mayusculas/<string:cadena>")
+def Contarmayusculas(cadena):
+    cont = {'minusculas': 0, 'mayusculas': 0} 
+    for i in cadena:
+        if i == i.upper():
+            cont['mayusculas'] += 1
+        elif i == i.lower():
+            cont['minusculas'] += 1
+       
+    return f"""
+            <p>Numero de Mayusculas {cont}</p>
+    """
+
   
 if __name__ == '__main__':
     app.run(debug=True)
