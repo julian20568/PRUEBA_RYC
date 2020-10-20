@@ -26,11 +26,22 @@ def upload_file():
 
 @app.route("/upload", methods=['POST'])
 def uploader():
- if request.method == 'POST':
-  f = request.files['archivo']
-  filename = secure_filename(f.filename)
-  f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-  return "<h1>Archivo subido exitosamente</h1>"
+    archivo =''
+    cont = {'minusculas': 0, 'mayusculas': 0}
+    if request.method == 'POST':
+     f = request.files['archivo']
+     filename = secure_filename(f.filename)
+     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+     
+    for i in archivo:
+        if i == i.upper():
+            cont['mayusculas'] += 1
+        elif i == i.lower():
+            cont['minusculas'] += 1
+       
+    return f"""
+            <p>Numero de Mayusculas {cont}</p>
+    """
 
 @app.route("/mayusculas/<string:cadena>")
 def Contarmayusculas(cadena):
